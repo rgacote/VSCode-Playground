@@ -16,17 +16,17 @@ From the VS Code bash shell:
 
 1. Install your current requirements.txt into the virtual environment.
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 1. Rename the requirements.txt file to something temporary.
 
-Create a new requirements.txt. This new file has version numbers.
+1. Create a new requirements.txt. This new file has version numbers.
 
-```bash
-pip freeze >requirements.txt
-```
+    ```bash
+    pip freeze >requirements.txt
+    ```
 
 ### Internals
 
@@ -65,4 +65,54 @@ git tag
 
 # Push local changes to the GitHub repository.
 git push
+
+# Push local tags to GitHub repository. Must always be done separately from the push.
+git push --tags
+
 ```
+
+### Working With Branches
+
+1. When working on changes it is prudent to create a new branch.
+This allows you to check in work in progress without changing your known-good code.
+
+    ```bash
+    # Create a new branch and switch to it.
+    git switch -c <<branch name>>
+
+    # List available branches. "main" is your known-good code.
+    git branch
+    ```
+
+2. Make changes and commit them to the branch.
+
+1. Test your changes.
+
+1. If everything looks good, switch back to the main branch and merge the changes.
+
+    ```bash
+    git switch main
+    git merge <<branch name>>
+    ```
+
+1. You can now delete the merged branch.
+
+    ```bash
+    git branch -d <<branch name>>
+    ```
+
+### Forgetting Changes
+
+It's not unusual to be working on a change and come to the conclusion that you've wandered down the wrong path and need to start over.
+
+```bash
+# Forget changes before you `git add` them.
+git restore <<filename>>
+
+# Forget changes after you `git add` them but before you commit them.
+git restore --staged <<filename>>
+
+# Forget everything you've done on this branch and go back to the known-good code.
+# Think carefully before doing this one.
+git switch main
+git branch -D <<branch name>>
